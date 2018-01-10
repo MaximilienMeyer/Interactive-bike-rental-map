@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Concevez une carte interactive de location de vélos</title>
+		<link rel="stylesheet" type="text/css" href="css/styles.css">
+	</head>
+	
+	<body>
+
+		<section id="slideshow">
+			<div id="slideshowContainer">
+
+				<!--SLIDES IMAGES WITH WIDTH EQUAL 100% AND CAPTION AND NUMBER TEXT-->
+				<div class="slides fade">
+					<img src="../../../../../Images/test1.jpg" style="width:100%; height: 100vh">
+					<div class="text">Caption Text</div>
+				</div>
+				<div class="slides fade">
+					<div class="numberText">1<sup>ère</sup> étape</div>
+					<img src="../../../../../Images/test2.jpg" style="width:100%; height: 100vh">
+					<div class="text">Caption Text</div>
+				</div>
+
+				<!--NEXT AND PREVIOUS BUTTONS-->
+				<a id="previous" onclick="plusSlides(-1)">&#10094;</a>
+				<a id="next" onclick="plusSlides(1)">&#10095;</a>
+
+				<!--POSTION DOTS/CIRCLES-->
+				<div id="dotsContainer">
+					<span class="dot" onclick="currentSlide(1)"></span>
+					<span class="dot" onclick="currentSlide(2)"></span>
+				</div>
+
+			</div>
+		</section>
+
+		<section id="map">
+			<div id="mapContainer">
+			</div>
+			<div id="stationStatus">
+				<h3>Détails de la station</h3>
+			</div>
+		</section>
+
+		<script src="js/ajax.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-cP2HI8Y15_hg_j9VnGUNOLsesE8K2rE&callback=initMap" async defer></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+		<script src="js/index.js"></script>		
+
+	</body>
+</html>
