@@ -115,7 +115,7 @@ body, section{
 #stationStatus{
 	position: relative;
 	float: right;
-	height: 50vh;
+	height: 40vh;
 	width: 25vw;
 	background-color: rgba(125, 233, 18, 0.9);
 	overflow-y: auto;

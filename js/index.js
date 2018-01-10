@@ -118,9 +118,9 @@ function initMap(){
 				/*DISPLAYS THE INFORMATIONS OF STATIONS*/
 				stationStatus.innerHTML = "";
 				if(bikesAvailable > 1){
-					stationStatus.innerHTML = "<p style='height: 5vh; width: 24vw;'><u>Adresse</u> : " + address + "</p> <br><p>" + numberOfPlaces + " places <br>" + bikesAvailable + " vélos disponibles</p> <br><p>Dernière mise à jour : " + lastUpdate + "</p><br> <div style='position: absolute; left: 50%; transform: translate(-50%, 0);'><button>Réserver</button></div>";
+					stationStatus.innerHTML = "<p style='height: 5vh; width: 24vw;'><u>Adresse</u> : " + address + "</p> <br><p>" + numberOfPlaces + " places <br>" + bikesAvailable + " vélos disponibles</p> <br><p>Dernière mise à jour : " + lastUpdate + "</p><br><br> <div style='position: absolute; left: 50%; transform: translate(-50%, 0);'><button>Réserver</button></div>";
 				}else{
-					stationStatus.innerHTML = "<p style='height: 5vh; width: 24vw;'><u>Adresse</u> : " + address + "</p> <br><p>" + numberOfPlaces + " places <br>" + bikesAvailable + " vélo disponible</p> <br><p>Dernière mise à jour : " + lastUpdate + "</p><br> <div style='position: absolute; left: 50%; transform: translate(-50%, 0);'><button>Réserver</button></div>";
+					stationStatus.innerHTML = "<p style='height: 5vh; width: 24vw;'><u>Adresse</u> : " + address + "</p> <br><p>" + numberOfPlaces + " places <br>" + bikesAvailable + " vélo disponible</p> <br><p>Dernière mise à jour : " + lastUpdate + "</p><br><br> <div style='position: absolute; left: 50%; transform: translate(-50%, 0);'><button>Réserver</button></div>";
 				}
 				stationStatus.setAttribute ("style", "position: absolute; left: 10px;");
 				stationStatusContainer.appendChild(stationStatus);
