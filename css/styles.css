@@ -125,8 +125,10 @@ body, section{
 #stationStatus h3{
 	text-align: center;
 }
-
+/*POSITIONNING AND RESIZING THE FOOTER*/
 footer{
 	margin-top: 100vh;
-	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
 }
+/*POSTIONNING THE CANVAS*/

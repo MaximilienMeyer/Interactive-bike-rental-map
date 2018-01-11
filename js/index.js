@@ -43,6 +43,7 @@ function showSlides(n){
 	}
 }
 
+/*RETURN THE CURRENT DATE IN FUNCTION OF THE TIMESTAMP*/
 function getDate(lastUpdate){
 	/*CREATION OF A NEW JS DATE OBJECT BASED ON THE TIMESTAMP*/
 	var date = new Date(lastUpdate);
@@ -88,6 +89,10 @@ function initMap(){
 		var stationStatusContainer = document.getElementById("stationStatus");
 		var stationStatus = document.createElement("div");
 
+		/*HIDE THE CANVAS UNTIL THE RESERVATION BUTTON HAS NOT BEEN HIT*/
+		var canvas = document.getElementById("canvas");
+		canvas.style.display = "none";
+
 		var stations = JSON.parse(response);
 		stations.forEach(function(stations){
 			lat = stations.position.lat;
@@ -118,12 +123,17 @@ function initMap(){
 				/*DISPLAYS THE INFORMATIONS OF STATIONS*/
 				stationStatus.innerHTML = "";
 				if(bikesAvailable > 1){
-					stationStatus.innerHTML = "<p style='height: 5vh; width: 24vw;'><u>Adresse</u> : " + address + "</p> <br><p>" + numberOfPlaces + " places <br>" + bikesAvailable + " vélos disponibles</p> <br><p>Dernière mise à jour : " + lastUpdate + "</p><br><br> <div style='position: absolute; left: 50%; transform: translate(-50%, 0);'><button id='reservation'>Réserver</button></div>";
+					stationStatus.innerHTML = "<p style='height: 5vh; width: 24vw;'><u>Adresse</u> : " + address + "</p> <br><p>" + numberOfPlaces + " places <br>" + bikesAvailable + " vélos disponibles</p> <br><p>Dernière mise à jour : " + lastUpdate + "</p><br><br> <div style='position: absolute; left: 50%; transform: translate(-50%, 0);'><button id='reservation'><a href='#footer'>Réserver</a></button></div>";
 				}else{
-					stationStatus.innerHTML = "<p style='height: 5vh; width: 24vw;'><u>Adresse</u> : " + address + "</p> <br><p>" + numberOfPlaces + " places <br>" + bikesAvailable + " vélo disponible</p> <br><p>Dernière mise à jour : " + lastUpdate + "</p><br><br> <div style='position: absolute; left: 50%; transform: translate(-50%, 0);'><button id='reservation'>Réserver</button></div>";
+					stationStatus.innerHTML = "<p style='height: 5vh; width: 24vw;'><u>Adresse</u> : " + address + "</p> <br><p>" + numberOfPlaces + " places <br>" + bikesAvailable + " vélo disponible</p> <br><p>Dernière mise à jour : " + lastUpdate + "</p><br><br> <div style='position: absolute; left: 50%; transform: translate(-50%, 0);'><button id='reservation'><a href='#footer'>Réserver</a></button></div>";
 				}
 				stationStatus.setAttribute ("style", "position: absolute; left: 10px;");
 				stationStatusContainer.appendChild(stationStatus);
+
+				/*BIKE RESERVATION*/
+				document.getElementById("reservation").addEventListener("click", function(){
+					canvas.style.display = "initial";
+				})
 			});
 
 		});
@@ -138,11 +148,6 @@ function initMap(){
 		}
 	});
 }
-
-/*BIKE RESERVATION*/
-/*HIDE THE CANVAS UNTIL THE RESERVATION BUTTON HAS NOT BEEN SELECTED*/
-var canvas = document.getElementById("canvas");
-canvas.style.display = "none";
 
 
 /*--------------------------------- JQUERY ----------------------------------*/
@@ -165,27 +170,27 @@ var context = document.getElementById("canvas").getContext("2d");
 /*THE VARIABLE PAINT IS SET TO TRUE*/
 /*AND REDRAW THE CANVAS*/
 $('#canvas').mousedown(function(e){
-  var mouseX = e.pageX - this.offsetLeft;
-  var mouseY = e.pageY - this.offsetTop;
+	var mouseX = e.pageX - this.offsetLeft;
+	var mouseY = e.pageY - this.offsetTop;
 		
-  paint = true;
-  addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
-  redraw();
+	paint = true;
+	addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+	redraw();
 });
 
 /*IF THE USER IS PRESSING DOWN THE MOUSE BUTTON (PAINT = TRUE), RECORD THE VALUE ON THE MOVEMENT AND RERDRAW THE CANVAS*/
 $('#canvas').mousemove(function(e){
-  if(paint){
-    addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
-    redraw();
-  }
+	if(paint){
+	addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+	redraw();
+	}
 });
 /*IF THE MARKER IF OUT OF THE PAPER (USER STOP PRESSING BUTTON OR LEAVE THE CANVAS AREA)*/
 $('#canvas').mouseup(function(e){
-  paint = false;
+	paint = false;
 });
 $('#canvas').mouseleave(function(e){
-  paint = false;
+	paint = false;
 });
 /*DEFINTION OF THE ADDCLICK FUNCTION THAT SAVE THE CLICK POSTIONS*/
 var clickX = new Array();
@@ -194,27 +199,27 @@ var clickDrag = new Array();
 var paint;
 
 function addClick(x, y, dragging){
-  clickX.push(x);
-  clickY.push(y);
-  clickDrag.push(dragging);
+	clickX.push(x);
+	clickY.push(y);
+	clickDrag.push(dragging);
 }
 /*DEFINTION OF THE FUNCTION REDRAW THAT CLEAR THE CANVAS AND REDRAW IT*/
 function redraw(){
- context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
-  
-  context.strokeStyle = "#df4b26";
-  context.lineJoin = "round";
-  context.lineWidth = 5;
+	context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+
+	context.strokeStyle = "#df4b26";
+	context.lineJoin = "round";
+	context.lineWidth = 5;
 			
-  for(var i=0; i < clickX.length; i++) {		
-    context.beginPath();
-    if(clickDrag[i] && i){
-      context.moveTo(clickX[i-1], clickY[i-1]);
-     }else{
-       context.moveTo(clickX[i]-1, clickY[i]);
-     }
-     context.lineTo(clickX[i], clickY[i]);
-     context.closePath();
-     context.stroke();
-  }
+	for(var i=0; i < clickX.length; i++) {		
+		context.beginPath();
+		if(clickDrag[i] && i){
+			context.moveTo(clickX[i-1], clickY[i-1]);
+		 }else{
+	   	 	context.moveTo(clickX[i]-1, clickY[i]);
+		 }
+		 context.lineTo(clickX[i], clickY[i]);
+		 context.closePath();
+		 context.stroke();
+		}
 }
