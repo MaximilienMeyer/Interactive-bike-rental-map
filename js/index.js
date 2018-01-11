@@ -151,3 +151,69 @@ $(document).on('keyup', function(event){
 		plusSlides(1);
 	}
 });
+
+/*SIGNATURE WITH CANVAS API FOR RESERVATION*/
+var context = document.getElementById("canvas").getContext("2d");
+
+/*IF THE USER CLICK ON THE CANVAS, RECORD THE POSITION IN AN ARRAY WITH THE ADDCLICK FUNCTION*/
+/*THE VARIABLE PAINT IS SET TO TRUE*/
+/*AND REDRAW THE CANVAS*/
+$("#canvas").on('mousedown', function(event){
+	var mouseX = event.pageX - this.offsetLeft;
+	var mouseY = event.pageY - this.offsetTop;
+
+	paint = true;
+	addClick(event.pageX -this.offsetLeft, event.pageY -this.offsetTop);
+	redraw();
+});
+
+/*IF THE USER IS PRESSING DOWN THE MOUSE BUTTON (PAINT = TRUE), RECORD THE VALUE ON THE MOVEMENT AND RERDRAW THE CANVAS*/
+$("#canvas").on('mousemove', function(event){
+	if(paint){
+		addClick(event.pageX -this.offsetLeft, event.pageY -this.offsetTop, true);
+		redraw();
+	}
+});
+
+/*IF THE MARKER IF OUT OF THE PAPER (USER STOP PRESSING BUTTON OR LEAVE THE CANVAS AREA)*/
+$("#canvas").on('mouseup', function(event){
+	paint = false;
+});
+$("#canvas").on('mouseleave', function(event){
+	paint = false;
+});
+
+/*DEFINTION OF THE ADDCLICK FUNCTION THAT SAVE THE CLICK POSTIONS*/
+var clickX = new Array();
+var clickY = new Array();
+var clickDrag = new Array();
+var paint;
+
+function addClick(x, y, dragging){
+	clickX.push(x);
+	clickY.push(y);
+	clickDrag.push(dragging);
+}
+
+/*DEFINTION OF THE FUNCTION REDRAW THAT CLEAR THE CANVAS AND REDRAW IT*/
+function redraw(){
+	/*CLEAR THE CANVAS*/
+	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+
+	context.strokeStyle = "#df4b26";
+	context.lineJoin = "round";
+	context.lineWidth = 5;
+			
+	for(var i=0; i < clickX.length; i++) {		
+		context.beginPath();
+		if(clickDrag[i] && i){
+		  context.moveTo(clickX[i-1], clickY[i-1]);
+		 }else{
+		   context.moveTo(clickX[i]-1, clickY[i]);
+		 }
+
+		 context.lineTo(clickX[i], clickY[i]);
+		 context.closePath();
+		 context.stroke();
+	}
+}
