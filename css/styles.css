@@ -108,7 +108,7 @@ body, section{
 /*GOOGLE MAP*/
 #mapContainer{
 	position: absolute;
-	height: 100vh;
+	height: 90vh;
 	width: 100%;
 }
 /*POSTION & STYLE OF THE STATION STATUS CONTAINER*/
@@ -127,8 +127,14 @@ body, section{
 }
 /*POSITIONNING AND RESIZING THE FOOTER*/
 footer{
-	margin-top: 100vh;
-	height: 100vh;
-	overflow: hidden;
+	margin-top: 90vh;
+	height: 10vh;
 }
-/*POSTIONNING THE CANVAS*/
+#canvasContainer{
+	position: relative;
+}
+canvas{
+	position: absolute;
+	top: 0;
+	left: 0;
+}
