@@ -118,9 +118,9 @@ function initMap(){
 				/*DISPLAYS THE INFORMATIONS OF STATIONS*/
 				stationStatus.innerHTML = "";
 				if(bikesAvailable > 1){
-					stationStatus.innerHTML = "<p style='height: 5vh; width: 24vw;'><u>Adresse</u> : " + address + "</p> <br><p>" + numberOfPlaces + " places <br>" + bikesAvailable + " vélos disponibles</p> <br><p>Dernière mise à jour : " + lastUpdate + "</p><br><br> <div style='position: absolute; left: 50%; transform: translate(-50%, 0);'><button>Réserver</button></div>";
+					stationStatus.innerHTML = "<p style='height: 5vh; width: 24vw;'><u>Adresse</u> : " + address + "</p> <br><p>" + numberOfPlaces + " places <br>" + bikesAvailable + " vélos disponibles</p> <br><p>Dernière mise à jour : " + lastUpdate + "</p><br><br> <div style='position: absolute; left: 50%; transform: translate(-50%, 0);'><button id='reservation'>Réserver</button></div>";
 				}else{
-					stationStatus.innerHTML = "<p style='height: 5vh; width: 24vw;'><u>Adresse</u> : " + address + "</p> <br><p>" + numberOfPlaces + " places <br>" + bikesAvailable + " vélo disponible</p> <br><p>Dernière mise à jour : " + lastUpdate + "</p><br><br> <div style='position: absolute; left: 50%; transform: translate(-50%, 0);'><button>Réserver</button></div>";
+					stationStatus.innerHTML = "<p style='height: 5vh; width: 24vw;'><u>Adresse</u> : " + address + "</p> <br><p>" + numberOfPlaces + " places <br>" + bikesAvailable + " vélo disponible</p> <br><p>Dernière mise à jour : " + lastUpdate + "</p><br><br> <div style='position: absolute; left: 50%; transform: translate(-50%, 0);'><button id='reservation'>Réserver</button></div>";
 				}
 				stationStatus.setAttribute ("style", "position: absolute; left: 10px;");
 				stationStatusContainer.appendChild(stationStatus);
@@ -138,6 +138,12 @@ function initMap(){
 		}
 	});
 }
+
+/*BIKE RESERVATION*/
+/*HIDE THE CANVAS UNTIL THE RESERVATION BUTTON HAS NOT BEEN SELECTED*/
+var canvas = document.getElementById("canvas");
+canvas.style.display = "none";
+
 
 /*--------------------------------- JQUERY ----------------------------------*/
 
@@ -158,31 +164,29 @@ var context = document.getElementById("canvas").getContext("2d");
 /*IF THE USER CLICK ON THE CANVAS, RECORD THE POSITION IN AN ARRAY WITH THE ADDCLICK FUNCTION*/
 /*THE VARIABLE PAINT IS SET TO TRUE*/
 /*AND REDRAW THE CANVAS*/
-$("#canvas").on('mousedown', function(event){
-	var mouseX = event.pageX - this.offsetLeft;
-	var mouseY = event.pageY - this.offsetTop;
-
-	paint = true;
-	addClick(event.pageX -this.offsetLeft, event.pageY -this.offsetTop);
-	redraw();
+$('#canvas').mousedown(function(e){
+  var mouseX = e.pageX - this.offsetLeft;
+  var mouseY = e.pageY - this.offsetTop;
+		
+  paint = true;
+  addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+  redraw();
 });
 
 /*IF THE USER IS PRESSING DOWN THE MOUSE BUTTON (PAINT = TRUE), RECORD THE VALUE ON THE MOVEMENT AND RERDRAW THE CANVAS*/
-$("#canvas").on('mousemove', function(event){
-	if(paint){
-		addClick(event.pageX -this.offsetLeft, event.pageY -this.offsetTop, true);
-		redraw();
-	}
+$('#canvas').mousemove(function(e){
+  if(paint){
+    addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+    redraw();
+  }
 });
-
 /*IF THE MARKER IF OUT OF THE PAPER (USER STOP PRESSING BUTTON OR LEAVE THE CANVAS AREA)*/
-$("#canvas").on('mouseup', function(event){
-	paint = false;
+$('#canvas').mouseup(function(e){
+  paint = false;
 });
-$("#canvas").on('mouseleave', function(event){
-	paint = false;
+$('#canvas').mouseleave(function(e){
+  paint = false;
 });
-
 /*DEFINTION OF THE ADDCLICK FUNCTION THAT SAVE THE CLICK POSTIONS*/
 var clickX = new Array();
 var clickY = new Array();
@@ -190,30 +194,27 @@ var clickDrag = new Array();
 var paint;
 
 function addClick(x, y, dragging){
-	clickX.push(x);
-	clickY.push(y);
-	clickDrag.push(dragging);
+  clickX.push(x);
+  clickY.push(y);
+  clickDrag.push(dragging);
 }
-
 /*DEFINTION OF THE FUNCTION REDRAW THAT CLEAR THE CANVAS AND REDRAW IT*/
 function redraw(){
-	/*CLEAR THE CANVAS*/
-	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-
-	context.strokeStyle = "#df4b26";
-	context.lineJoin = "round";
-	context.lineWidth = 5;
+ context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+  
+  context.strokeStyle = "#df4b26";
+  context.lineJoin = "round";
+  context.lineWidth = 5;
 			
-	for(var i=0; i < clickX.length; i++) {		
-		context.beginPath();
-		if(clickDrag[i] && i){
-		  context.moveTo(clickX[i-1], clickY[i-1]);
-		 }else{
-		   context.moveTo(clickX[i]-1, clickY[i]);
-		 }
-
-		 context.lineTo(clickX[i], clickY[i]);
-		 context.closePath();
-		 context.stroke();
-	}
+  for(var i=0; i < clickX.length; i++) {		
+    context.beginPath();
+    if(clickDrag[i] && i){
+      context.moveTo(clickX[i-1], clickY[i-1]);
+     }else{
+       context.moveTo(clickX[i]-1, clickY[i]);
+     }
+     context.lineTo(clickX[i], clickY[i]);
+     context.closePath();
+     context.stroke();
+  }
 }
