@@ -133,6 +133,15 @@ function initMap(){
 					stationStatusContainer.style.display = "none";
 					canvas = resizeCanvas(canvas);
 					canvas.style.display = "block";
+					writeInCanvas(canvas, address, numberOfPlaces, bikesAvailable);
+
+					/*IF THE USER WANT TO EXIT THE RESERVATION*/
+					document.addEventListener("keyup", function(event){
+						if(event.keyCode === 27){
+							stationStatusContainer.style.display = "block";
+							canvas.style.display = "none";
+						}
+					});
 				});
 			});
 
@@ -203,9 +212,9 @@ function addClick(x, y, dragging){
 	clickY.push(y);
 	clickDrag.push(dragging);
 }
-/*DEFINTION OF THE FUNCTION REDRAW THAT CLEAR THE CANVAS AND REDRAW IT*/
+/*DEFINTION OF THE FUNCTION REDRAW*/
 function redraw(){
-	context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+	//context.clearRect(0, 0, canvas.width, canvas.height);
 
 	context.strokeStyle = "#df4b26";
 	context.lineJoin = "round";
@@ -224,9 +233,27 @@ function redraw(){
 		}
 }
 
-/*DEFINTION OF A FUNCTION THAT RESIZE THE CANVAS ACCORDING TO THE GOOGLE MAPS DIMENSIONS*/
+/*DEFINTION OF A FUNCTION THAT RESIZE THE CANVAS ACCORDING TO THE GOOGLE MAPS DIMENSIONS AND TO THE VIEWPORT DIMENSIONS*/
 function resizeCanvas(canvas){
 	canvas.setAttribute('width', $(window).width() + "px");
 	canvas.setAttribute('height', $(window).height()*0.9 + "px");
 	return canvas;
+}
+
+/*FUNCTION THAT DISPLAY THE INFORMATION OF THE WANTED STATION FOR BIKE RESERVATION*/
+function writeInCanvas(canvas, address, numberOfPlaces, bikesAvailable){
+	var details = "Détails de la station";
+	var reservation = "Pour réserver votre vélo, veuillez signer en dessinant sur l'espace grisé.";
+
+	context.font = "15px Arial";
+	context.strokeText(details, 10, 25);
+	context.fillText("Adresse : " + address, 10, 50);
+	context.fillText(numberOfPlaces + " places", 10, 75);
+	context.fillText("Réservation d'un vélo.", 10, 150);
+	context.strokeText(reservation, 10, 250);
+	if(bikesAvailable < 2){
+		context.fillText(bikesAvailable + " vélo disponible", 10, 100);
+	}else{
+		context.fillText(bikesAvailable + " vélos disponibles", 10, 100);
+	}
 }

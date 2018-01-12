@@ -130,6 +130,7 @@ footer{
 	margin-top: 90vh;
 	height: 10vh;
 }
+/*POSITIONNING THE CANVAS*/
 canvas{
 	position: absolute;
 	top: 100vh;
