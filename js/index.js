@@ -70,7 +70,6 @@ function getDate(lastUpdate){
 	var lastUpdate = "Le " + day + "/" + month + "/" + year + " à " + hours + "h" + minutes + "m" + seconds + "s";
 	return lastUpdate;
 }
-
 /*GOOGLE MAP API INITIALIZATION WITH FOCUS ON LYON CITY HALL*/
 function initMap(){
 	var map = new google.maps.Map(document.getElementById("mapContainer"), {
@@ -88,7 +87,6 @@ function initMap(){
 		var marker, address, numberOfPlaces, bikesAvailable, lastUpdate;
 		var stationStatusContainer = document.getElementById("stationStatus");
 		var stationStatus = document.createElement("div");
-
 		/*HIDE THE CANVAS UNTIL THE RESERVATION BUTTON HAS NOT BEEN HIT*/
 		var canvas = document.getElementById("canvas");
 		canvas.style.display = "none";
@@ -132,8 +130,10 @@ function initMap(){
 
 				/*BIKE RESERVATION*/
 				document.getElementById("reservation").addEventListener("click", function(){
-					canvas.style.display = "initial";
-				})
+					stationStatusContainer.style.display = "none";
+					canvas = resizeCanvas(canvas);
+					canvas.style.display = "block";
+				});
 			});
 
 		});
@@ -222,4 +222,11 @@ function redraw(){
 		 context.closePath();
 		 context.stroke();
 		}
+}
+
+/*DEFINTION OF A FUNCTION THAT RESIZE THE CANVAS ACCORDING TO THE GOOGLE MAPS DIMENSIONS*/
+function resizeCanvas(canvas){
+	canvas.setAttribute('width', $(window).width() + "px");
+	canvas.setAttribute('height', $(window).height()*0.9 + "px");
+	return canvas;
 }
