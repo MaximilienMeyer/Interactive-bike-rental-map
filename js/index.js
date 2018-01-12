@@ -87,9 +87,9 @@ function initMap(){
 		var marker, address, numberOfPlaces, bikesAvailable, lastUpdate;
 		var stationStatusContainer = document.getElementById("stationStatus");
 		var stationStatus = document.createElement("div");
-		/*HIDE THE CANVAS UNTIL THE RESERVATION BUTTON HAS NOT BEEN HIT*/
 		var canvas = document.getElementById("canvas");
-		canvas.style.display = "none";
+		var confirmation = document.getElementById("confirmation");
+		var cancel = document.getElementById("cancel");
 
 		var stations = JSON.parse(response);
 		stations.forEach(function(stations){
@@ -130,18 +130,25 @@ function initMap(){
 
 				/*BIKE RESERVATION*/
 				document.getElementById("reservation").addEventListener("click", function(){
-					stationStatusContainer.style.display = "none";
-					canvas = resizeCanvas(canvas);
-					canvas.style.display = "block";
-					writeInCanvas(canvas, address, numberOfPlaces, bikesAvailable);
+					/*IF A BIKE IS AVAILABLE*/
+					if(bikesAvailable!=0){
+						stationStatusContainer.style.display = "none";
+						canvas = resizeCanvas(canvas);
+						canvas.style.display = "block";
+						confirmation.style.display = "block";
+						cancel.style.display = "block";
+						writeInCanvas(canvas, address, numberOfPlaces, bikesAvailable);
 
-					/*IF THE USER WANT TO EXIT THE RESERVATION*/
-					document.addEventListener("keyup", function(event){
-						if(event.keyCode === 27){
-							stationStatusContainer.style.display = "block";
-							canvas.style.display = "none";
-						}
-					});
+						/*IF THE USER WANT TO EXIT THE RESERVATION*/
+						document.addEventListener("keyup", function(event){
+							if(event.keyCode === 27){
+								stationStatusContainer.style.display = "block";
+								canvas.style.display = "none";
+								confirmation.style.display = "none";
+								cancel.style.display = "none";
+							}
+						});
+					}
 				});
 			});
 

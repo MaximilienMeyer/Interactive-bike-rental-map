@@ -135,3 +135,26 @@ canvas{
 	position: absolute;
 	top: 100vh;
 }
+/*CANVAS BUTTONS VERTICAL POSITIONNING*/
+#canvasContainer button{
+	position: absolute;
+	top: 180vh;
+	display: inline-block;
+	display: none;
+}
+/*CANVAS BUTTON HORIZONTAL POSTIONNING AND RESIZING*/
+#confirmation{
+	left: 45vw;
+	padding-left: 1vw;
+	padding-right: 1vw;
+	padding-top: 0.5vh;
+	padding-bottom: 0.5vh;
+	margin-left: 10%;
+}
+#cancel{
+	left: 40vw;
+	padding-left: 1vw;
+	padding-right: 1vw;
+	padding-top: 0.5vh;
+	padding-bottom: 0.5vh;
+}
