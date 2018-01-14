@@ -91,6 +91,9 @@ function initMap(){
 		var confirmation = document.getElementById("confirmation");
 		var cancel = document.getElementById("cancel");
 
+		/*VARIABLE THAT STORE IF YES OR NO A BIKE HAS ALREADY BEEN RESERVATED*/
+		var reservationStatus = sessionStorage.setItem("reservation", false);
+
 		var stations = JSON.parse(response);
 		stations.forEach(function(stations){
 			lat = stations.position.lat;
@@ -156,11 +159,23 @@ function initMap(){
 							cancel.style.display = "none";
 							clearSignature();
 						});
+
+						/*IF THE USER WANT TO CONFIRM THE RESERVATION*/
+						confirmation.addEventListener("click", function(){
+							/*IF THE USER HAS SIGNED BEFORE CONFIRM*/
+							var signature = hasSigned();
+							if(signature){
+								reservationStatus = true;
+								displayReservationStatus(reservationStatus, address);
+							}
+						});
 					}
 				});
 			});
-
 		});
+
+		/*DISPLAY THE RESERVATION STATUS*/
+		displayReservationStatus(reservationStatus, address);
 
 		/*IF NO MARKER HAS BEEN CLICKED*/
 		if(!address){
@@ -173,6 +188,16 @@ function initMap(){
 	});
 }
 
+/*FUNCTION THAT DISPLAY THE RESERVATION STATUS IN THE FOOTER*/
+function displayReservationStatus(reservationStatus, address){
+	var footer = document.querySelector("footer");
+	if(reservationStatus){
+		footer.innerHTML = "<h3>1 vélo a été reservé à la station : " + address +"<br>Durée restante :";
+
+	}else{
+		footer.innerHTML = "<h3>Aucun vélo n'a été reservé.</h3>";	
+	}
+}
 
 /*--------------------------------- JQUERY ----------------------------------*/
 
@@ -251,7 +276,7 @@ function redraw(){
 /*DEFINTION OF A FUNCTION THAT RESIZE THE CANVAS ACCORDING TO THE GOOGLE MAPS DIMENSIONS AND TO THE VIEWPORT DIMENSIONS*/
 function resizeCanvas(canvas){
 	canvas.setAttribute('width', $(window).width() + "px");
-	canvas.setAttribute('height', $(window).height()*0.9 + "px");
+	canvas.setAttribute('height', $(window).height()*0.85 + "px");
 	return canvas;
 }
 
@@ -278,4 +303,13 @@ function clearSignature(){
 	clickX.length = 0;
 	clickY.length = 0;
 	clickDrag.length = 0;
+}
+
+/*FUNCTION THAT ALLOWS TO KNOW IF THE USER HAS SIGNED*/
+function hasSigned(){
+	if(clickY.length != 0 || clickX.length != 0){
+		return true;
+	}else{
+		return false;
+	}
 }
