@@ -146,7 +146,15 @@ function initMap(){
 								canvas.style.display = "none";
 								confirmation.style.display = "none";
 								cancel.style.display = "none";
+								clearSignature();
 							}
+						});
+						cancel.addEventListener("click", function(){
+							stationStatusContainer.style.display = "block";
+							canvas.style.display = "none";
+							confirmation.style.display = "none";
+							cancel.style.display = "none";
+							clearSignature();
 						});
 					}
 				});
@@ -263,4 +271,11 @@ function writeInCanvas(canvas, address, numberOfPlaces, bikesAvailable){
 	}else{
 		context.fillText(bikesAvailable + " vélos disponibles", 10, 100);
 	}
+}
+
+/*FUNVTION THAT CLEAR THE SIGNATURE FROM THE CANVAS*/
+function clearSignature(){
+	clickX.length = 0;
+	clickY.length = 0;
+	clickDrag.length = 0;
 }
