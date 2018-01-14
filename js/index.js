@@ -167,6 +167,16 @@ function initMap(){
 							if(signature){
 								reservationStatus = true;
 								displayReservationStatus(reservationStatus, address);
+								var countdown = setInterval(function(){
+									doCountdown(countdown);
+								}, 1000);
+
+								stationStatusContainer.style.display = "block";
+								canvas.style.display = "none";
+								confirmation.style.display = "none";
+								cancel.style.display = "none";
+								clearSignature();
+
 							}
 						});
 					}
@@ -192,11 +202,38 @@ function initMap(){
 function displayReservationStatus(reservationStatus, address){
 	var footer = document.querySelector("footer");
 	if(reservationStatus){
-		footer.innerHTML = "<h3>1 vélo a été reservé à la station : " + address +"<br>Durée restante :";
+		footer.innerHTML = "<h3>1 vélo a été reservé à la station : " + address +"<br>Durée restante : <span id='countdown'>19 min 59 s<span>";
 
 	}else{
 		footer.innerHTML = "<h3>Aucun vélo n'a été reservé.</h3>";	
 	}
+}
+
+/*COUNTDOWN FUNCTION (SET TO 20 MIN)*/
+function doCountdown(countdown){
+	/*COLLECT THE REMAINING TIME IN THE COUNTDOWN*/
+	var time = document.getElementById("countdown").textContent;
+	minutes = time.substr(0, 2);
+	seconds = time.substr(6, 3);
+
+	seconds = seconds - 1;
+
+	if(seconds == 0){
+		minutes = minutes - 1;
+		seconds = 59;
+	}
+
+	document.getElementById("countdown").textContent = minutes + " min " + seconds + " s";
+
+	if(minutes == 0 && seconds == 0){
+		stopCountdown(countdown);
+	}
+}
+
+/*FUNCTION THAT STOP THE COUNTDOWN*/
+function stopCountdown(countdown){
+	clearInterval(countdown);
+	displayReservationStatus(false, false);
 }
 
 /*--------------------------------- JQUERY ----------------------------------*/

@@ -125,15 +125,6 @@ body, section{
 #stationStatus h3{
 	text-align: center;
 }
-/*POSITIONNING AND RESIZING THE FOOTER*/
-footer{
-	position: absolute;
-	top: 185vh;
-	height: 13vh;
-	padding-top: 2vh;
-	left: 50%;
-	transform: translate(-50%, 0);
-}
 /*POSITIONNING THE CANVAS*/
 canvas{
 	position: absolute;
@@ -161,4 +152,13 @@ canvas{
 	padding-right: 1vw;
 	padding-top: 0.5vh;
 	padding-bottom: 0.5vh;
+}
+/*POSITIONNING AND RESIZING THE FOOTER*/
+footer{
+	position: absolute;
+	top: 185vh;
+	height: 13vh;
+	padding-top: 2vh;
+	left: 50%;
+	transform: translate(-50%, 0);
 }
