@@ -1,5 +1,8 @@
 body, section{
 	margin: 0;
+	font-family: 'Cabin', sans-serif;
+	background-color: rgba(50, 50, 50, 0.95);
+	color: #929FAD;
 }
 /*SLIDESHOW CONTAINER*/
 #slideshowContainer{
@@ -18,7 +21,7 @@ body, section{
 	position: absolute;
 	width: 0;
 	padding: 16px;
-	color: black;
+	color: rgba(50, 50, 50, 1);
 	font-weight: bold;
 	font-size: 18px;
 	transition: 0.6s ease;
@@ -40,7 +43,7 @@ body, section{
 }
 /*ON HOVER : BLACK BACKGROUND COLOR WITH TRANSPARENCY*/
 #previous:hover, #next:hover{
-	background-color: rgba(0,0,0,0.8);
+	background-color: rgba(146, 159, 173, 0.95);
 }
 /*CAPTION TEXT*/
 .text{
@@ -73,14 +76,13 @@ body, section{
 	cursor: pointer;
 	height: 15px;
 	width: 15px;
-	background-color: white;
+	background-color: #929FAD;
 	border-radius: 50%;
-	border: 1px black solid;
 	display: inline-block;
 	transition: background-color 0.6s ease;
 }
 .active, .dot:hover{
-	background-color: black;
+	background-color: rgba(50, 50, 50, 0.95);;
 }
 /*FADING ANIMATION*/
 .fade{
@@ -117,13 +119,25 @@ body, section{
 	float: right;
 	height: 40vh;
 	width: 25vw;
-	background-color: rgba(125, 233, 18, 0.9);
+	background-color: rgba(50, 50, 50, 0.95);
 	overflow-y: auto;
 	overflow-x: hidden;
 }
 /*POSTITION OF H3 OF STATION STATUS*/
 #stationStatus h3{
 	text-align: center;
+}
+/*STATIONSTATUS BUTTON*/
+#stationStatus button{
+	font-family: 'Cabin', sans-serif;
+	background-color:  #929FAD;
+	color: #323232;
+	padding-left: 1vw;
+	padding-right: 1vw;
+	padding-top: 0.5vh;
+	padding-bottom: 0.5vh;
+	border : none;
+	cursor: pointer;
 }
 /*POSITIONNING THE CANVAS*/
 canvas{
@@ -132,10 +146,15 @@ canvas{
 }
 /*CANVAS BUTTONS VERTICAL POSITIONNING*/
 #canvasContainer button{
+	font-family: 'Cabin', sans-serif;
+	background-color:  #929FAD;
+	color: #323232;
 	position: absolute;
 	top: 180vh;
 	display: inline-block;
 	display: none;
+	border : none;
+	cursor: pointer;
 }
 /*CANVAS BUTTON HORIZONTAL POSTIONNING AND RESIZING*/
 #confirmation{

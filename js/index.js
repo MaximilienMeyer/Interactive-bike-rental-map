@@ -314,7 +314,7 @@ function addClick(x, y, dragging){
 function redraw(){
 	//context.clearRect(0, 0, canvas.width, canvas.height);
 
-	context.strokeStyle = "#df4b26";
+	context.strokeStyle = "#323232";
 	context.lineJoin = "round";
 	context.lineWidth = 5;
 			
@@ -343,7 +343,7 @@ function writeInCanvas(canvas, address, numberOfPlaces, bikesAvailable){
 	var details = "Détails de la station";
 	var reservation = "Pour réserver votre vélo, veuillez signer en dessinant sur l'espace grisé.";
 
-	context.font = "15px Arial";
+	context.font = "15px Cabin";
 	context.strokeText(details, 10, 25);
 	context.fillText("Adresse : " + address, 10, 50);
 	context.fillText(numberOfPlaces + " places", 10, 75);
