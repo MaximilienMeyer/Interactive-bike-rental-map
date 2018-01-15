@@ -113,7 +113,12 @@ function initMap(){
 				/*COLLECT INFORMATIONS OF STATION*/
 				address = stations.address;
 				numberOfPlaces = stations.bike_stands;
-				bikesAvailable = stations.available_bikes;
+				/*IF A BIKE HAS ALREADY BEEN RESERVATED IN THE STATION*/
+				if(document.getElementById("addressFooter") && document.getElementById("addressFooter").textContent == address){
+					bikesAvailable = stations.available_bikes - 1;
+				}else{
+					bikesAvailable = stations.available_bikes;
+				}
 				lastUpdate = getDate(stations.last_update);
 
 				/*REMOVE THE PARAGRAPH BELOW*/
@@ -129,7 +134,8 @@ function initMap(){
 				/*BIKE RESERVATION*/
 				document.getElementById("reservation").addEventListener("click", function(){
 					/*IF A BIKE IS AVAILABLE*/
-					if(bikesAvailable!=0){
+					if(bikesAvailable!=0 && bikesAvailable != stations.available_bikes - 1){
+
 						stationStatusContainer.style.display = "none";
 						canvas = resizeCanvas(canvas);
 						canvas.style.display = "block";
@@ -155,19 +161,23 @@ function initMap(){
 							clearSignature();
 						});
 
+						/*DECLARE VARIABLE FOR COUNTDOWN*/
+						var countdown;
 						/*IF THE USER WANT TO CONFIRM THE RESERVATION*/
 						confirmation.addEventListener("click", function(){
 							/*IF THE USER HAS SIGNED BEFORE CONFIRM*/
 							var signature = hasSigned();
 							if(signature){
+								/*RESET THE COUNTDOWN IF A RESERVATION HAS ALREADY BEEN MADE BEFORE*/
+								clearInterval(countdown);
+
 								reservationStatus = true;
 								displayReservationStatus(reservationStatus, address);
-								var countdown = setInterval(function(){
+								countdown = setInterval(function(){
 									doCountdown(countdown);
 								}, 1000);
 
-								/*UPDATE THE NUMBER OF BIKES AVAILABLE*/
-								stationStatusContainer.innerHTML = "";
+								/*UPDATE THE NUMBER OF BIKES AVAILABLE IN THE STATION*/
 								stationStatus = getStationStatus(stationStatus, bikesAvailable - 1, address, numberOfPlaces, lastUpdate);
 								stationStatusContainer.appendChild(stationStatus);
 
@@ -213,7 +223,7 @@ function getStationStatus(stationStatus, bikesAvailable, address, numberOfPlaces
 function displayReservationStatus(reservationStatus, address){
 	var footer = document.querySelector("footer");
 	if(reservationStatus){
-		footer.innerHTML = "<h3>1 vélo a été reservé à la station : " + address +"<br>Durée restante : <span id='countdown'>20 min 0 s<span>";
+		footer.innerHTML = "<h3>1 vélo a été reservé à la station : <span id='addressFooter'>" + address +"</span><br> Durée restante : <span id='countdown'>20 min 0 s<span>";
 
 	}else{
 		footer.innerHTML = "<h3>Aucun vélo n'a été reservé.</h3>";	
