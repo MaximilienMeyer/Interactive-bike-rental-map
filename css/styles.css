@@ -7,13 +7,31 @@ body, section{
 /*SLIDESHOW CONTAINER*/
 #slideshowContainer{
 	position: relative;
+	width: calc(100% - 8px);
+	border: 4px yellow solid;
+}
+/*OVERLAY ON THE SLIDER*/
+#overlay{
+	background-color: rgba(146, 159, 173, 0.4);
 	width: 100%;
-	/*HEIGHT EQUAL THE HEIGHT OF CLIENT BROWSER*/
-	height: 100vh;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 0;
 }
 /*HIDE THE IMAGE BY DEFAULT*/
 .slides{
 	display: none;
+}
+/*STEPS NUMBER TEXT*/
+.slides strong{
+	color: yellow;
+	font-weight: normal;
+}
+/*LINKS IN THE SLIDER*/
+.slides a{
+	color: #929FAD;
 }
 /*PREVIOUS AND NEXT BUTTONS*/
 #previous, #next{
@@ -57,11 +75,16 @@ body, section{
 }
 /*NUMBER TEXT*/
 .numberText{
-	color: black;
-	font-size: 16px;
-	padding: 8px 12px;
 	position: absolute;
-	top: 0;
+	top: 5vh;
+	left: 50%;
+	transform: translate(-50%, 0);
+	background-color: rgba(50, 50, 50, 0.95);
+	color: #929FAD;
+	text-shadow: 2px 2px black;
+	font-size: 25px;
+	padding: 8px 12px;
+	text-align: center;
 }
 /*DOTS CONTAINER*/
 #dotsContainer{

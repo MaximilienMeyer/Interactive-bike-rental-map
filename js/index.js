@@ -35,11 +35,13 @@ function showSlides(n){
 	slides[slideIndex-1].style.display = "block";
 	dots[slideIndex-1].className += " active";
 
-	/*HIDE THE PREVIOUS BUTTON ON FIRST SLIDE*/
+	/*HIDE THE PREVIOUS BUTTON AND THE OVERLAY ON FIRST SLIDE*/
 	if(slideIndex === 1){
 		document.getElementById("previous").style.display="none";
+		document.getElementById("overlay").style.display = "none";
 	}else{
-		document.getElementById("previous").style.display="initial";	
+		document.getElementById("previous").style.display="initial";
+		document.getElementById("overlay").style.display = "initial";	
 	}
 }
 
