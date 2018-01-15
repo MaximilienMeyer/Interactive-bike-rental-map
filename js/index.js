@@ -202,7 +202,7 @@ function initMap(){
 function displayReservationStatus(reservationStatus, address){
 	var footer = document.querySelector("footer");
 	if(reservationStatus){
-		footer.innerHTML = "<h3>1 vélo a été reservé à la station : " + address +"<br>Durée restante : <span id='countdown'>19 min 59 s<span>";
+		footer.innerHTML = "<h3>1 vélo a été reservé à la station : " + address +"<br>Durée restante : <span id='countdown'>20 min 0 s<span>";
 
 	}else{
 		footer.innerHTML = "<h3>Aucun vélo n'a été reservé.</h3>";	
@@ -218,7 +218,7 @@ function doCountdown(countdown){
 
 	seconds = seconds - 1;
 
-	if(seconds == 0){
+	if(seconds < 0){
 		minutes = minutes - 1;
 		seconds = 59;
 	}
