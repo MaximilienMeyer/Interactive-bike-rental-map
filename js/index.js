@@ -122,13 +122,8 @@ function initMap(){
 				}
 
 				/*DISPLAYS THE INFORMATIONS OF STATIONS*/
-				stationStatus.innerHTML = "";
-				if(bikesAvailable > 1){
-					stationStatus.innerHTML = "<p style='height: 5vh; width: 24vw;'><u>Adresse</u> : " + address + "</p> <br><p>" + numberOfPlaces + " places <br>" + bikesAvailable + " vélos disponibles</p> <br><p>Dernière mise à jour : " + lastUpdate + "</p><br><br> <div style='position: absolute; left: 50%; transform: translate(-50%, 0);'><button id='reservation'>Réserver</button></div>";
-				}else{
-					stationStatus.innerHTML = "<p style='height: 5vh; width: 24vw;'><u>Adresse</u> : " + address + "</p> <br><p>" + numberOfPlaces + " places <br>" + bikesAvailable + " vélo disponible</p> <br><p>Dernière mise à jour : " + lastUpdate + "</p><br><br> <div style='position: absolute; left: 50%; transform: translate(-50%, 0);'><button id='reservation'>Réserver</button></div>";
-				}
-				stationStatus.setAttribute ("style", "position: absolute; left: 10px;");
+				stationStatus.setAttribute("style", "position: absolute; left: 10px;");
+				stationStatus = getStationStatus(stationStatus, bikesAvailable, address, numberOfPlaces, lastUpdate);
 				stationStatusContainer.appendChild(stationStatus);
 
 				/*BIKE RESERVATION*/
@@ -171,6 +166,11 @@ function initMap(){
 									doCountdown(countdown);
 								}, 1000);
 
+								/*UPDATE THE NUMBER OF BIKES AVAILABLE*/
+								stationStatusContainer.innerHTML = "";
+								stationStatus = getStationStatus(stationStatus, bikesAvailable - 1, address, numberOfPlaces, lastUpdate);
+								stationStatusContainer.appendChild(stationStatus);
+
 								stationStatusContainer.style.display = "block";
 								canvas.style.display = "none";
 								confirmation.style.display = "none";
@@ -196,6 +196,17 @@ function initMap(){
 			stationStatusContainer.appendChild(paragraph);
 		}
 	});
+}
+
+/*FUNCTION THAT RETURN THE STATION STATUS*/
+function getStationStatus(stationStatus, bikesAvailable, address, numberOfPlaces, lastUpdate){
+	stationStatus.innerHTML = "";
+	if(bikesAvailable > 1){
+		stationStatus.innerHTML = "<p style='height: 5vh; width: 24vw;'><u>Adresse</u> : " + address + "</p> <br><p>" + numberOfPlaces + " places <br>" + bikesAvailable + " vélos disponibles</p> <br><p>Dernière mise à jour : " + lastUpdate + "</p><br><br> <div style='position: absolute; left: 50%; transform: translate(-50%, 0);'><button id='reservation'>Réserver</button></div>";
+	}else{
+		stationStatus.innerHTML = "<p style='height: 5vh; width: 24vw;'><u>Adresse</u> : " + address + "</p> <br><p>" + numberOfPlaces + " places <br>" + bikesAvailable + " vélo disponible</p> <br><p>Dernière mise à jour : " + lastUpdate + "</p><br><br> <div style='position: absolute; left: 50%; transform: translate(-50%, 0);'><button id='reservation'>Réserver</button></div>";
+	}
+	return stationStatus;
 }
 
 /*FUNCTION THAT DISPLAY THE RESERVATION STATUS IN THE FOOTER*/
